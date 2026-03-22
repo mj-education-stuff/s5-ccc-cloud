@@ -1,0 +1,67 @@
+Setting up CI/CD with Cloud Build
+
+1. Fork the repo:
+https://gitlab.sdu.dk/cloud-computing-continuum-2024/3-three-data, name it 3-three-data-<yourname>
+
+
+2. Clone your forked repo to your local machine
+
+
+3. Set up Cloud Build to connect to the repo
+- You need to create a Personal Access Token in GitLab with the api and read_api scopes
+PATPDg_iPQs-bnB8E3Zk9DB
+
+- repos
+- 2en gen
+- new gitlab host connection
+hosturl: gitlab.sdu.dk/
+
+
+
+
+4. Set up Cloud Build to have a Frontend and Backend trigger
+- Create a cloudbuild.yaml file in the /frontend and /backend folders:
+- Add the necessary environment variables to the backend Dockerfile
+
+
+5. Change the frontend, so that the API_ADDRESS is set from an environment variable
+- Change the API_ADDRESS in the frontend to be set from an environment
+variable (consider dotenv for local development too)
+-- Add the API_ADDRESS to the cloudbuild.yaml file
+
+
+6. Eliminate sensitive values from the code
+The --set-env-vars in the cloudbuild.yaml file contain sensitive values,
+that must not be stored in the codebase. Let's use Secret Manager to store
+the values, and then use them in the cloudbuild.yaml file.
+
+Update the cloudbuild.yaml files to use the secrets, e.g. for the backend's one env var:
+'--set-secrets', 'INSTANCE_UNIX_SOCKET=INSTANCE_UNIX_SOCKET:latest', # Using secrets
+
+When deploying, you might need to delete and recreate the Cloud Run services, because of the new type of
+environment variables (secret instead of basic).
+
+
+7. Set up substitution variables in the Cloud Build trigger && cloudbuild.yaml files
+E.g. for the frontend:
+'--set-secrets', 'API_ADDRESS=${_API_ADDRESS}:latest', # Using secrets and substitution
+
+
+8. Test the setup
+- Push a change to the repo and observe the Cloud Build logs
+
+
+9. Create a dev branch, dev DB, and set up a trigger for the dev branch
+- Create a trigger for the backend and frontend that triggers on a push to the dev branch
+- Create a new Cloud SQL instance for the dev environment, with similar settings to the production one
+- Create the secrets in Secret Manager for the dev environment
+- Make sure to update the correct trigger configs to use the dev Cloud SQL instance
+
+
+10. Try to deploy the dev branch
+- Push a change to the dev branch and observe the Cloud Build logs
+
+
+11. Change something on the dev branch, but not on the master branch
+- Push a change to the dev branch, and test the prod and dev environments if they are different
+- Note, that the cloudbuild.yaml files should be the same for both environments

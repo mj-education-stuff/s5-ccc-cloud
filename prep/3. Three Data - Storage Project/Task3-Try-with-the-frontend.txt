@@ -1,0 +1,19 @@
+Try with the frontend
+
+You can now locally run the frontend with the following steps:
+1. Make sure the API_ADDRESS in the frontend source code is set to your Cloud Run service URL.
+- like this https://exercise3-service-367890840154.europe-north1.run.app
+- in file: ./app/routes/_index.tsx
+
+
+2. In the frontend directory start the dev process
+$ npm install
+$ npm run dev
+
+
+3.Let's deploy the frontend now to be served from the cloud.
+This Remix app cannot be compiled into a SPA,
+so you need to run the dev server to see the frontend.
+$ gcloud builds submit --tag gcr.io/s5terraform/frontend 
+
+input for correct answer needs to be an int

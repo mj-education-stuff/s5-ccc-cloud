@@ -1,0 +1,8 @@
+Create a Cloud SQL Instance with MySQL
+
+1. Create a Cloud SQL instance with MySQL.
+2. Create a database.
+3. Create a user.
+
+To achieve this follow these instructions:
+https://cloud.google.com/sql/docs/mysql/connect-instance-cloud-run#set_up

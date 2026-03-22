@@ -1,0 +1,34 @@
+Removing the DB from the Internet
+
+1. Remove the public IP from the Cloud SQL instance, and enable the private IP under the Connections >
+Instance IP assignment
+
+
+2. Follow the steps from here, using the Private IP options:
+https://cloud.google.com/sql/docs/mysql/connect-instance-cloud-run#set_up
+
+
+
+Internal-only access to the backend
+
+1. For the backend Cloud Run service, allow only Interlal ingress.
+- not in the deploy menu, but in the service menu
+
+
+2. Test the app from the frontend. What happens? Why is it not working?
+
+
+3. Follow these steps: https://cloud.google.com/run/docs/securing/private-networking#from-other-services
+
+Make sure you send traffic directly to a VPC from the frontend (source)
+
+- In the VPC: Make sure that Private Google Access is possible and is enabled on your chosen
+subnet, and that the subnet is in the same region as the Cloud Run service
+
+Make sure the backend (target) is only receiving traffic from internal sources
+
+Make sure the frontend and backend cloud run services are in the same VPC
+and region, and therefore subnet.
+
+- create vpc
+- create connector (serverless vpc access)

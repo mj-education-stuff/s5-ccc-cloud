@@ -1,0 +1,42 @@
+Deploy a Cloud Run Service with the backend
+
+1. Clone the repo with the backend and frontend codes:
+https://gitlab.sdu.dk/cloud-computing-continuum-2024/3-three-data
+
+
+2. Push the backend service to Artifact Registry with the following command from the backend
+directory:
+$ gcloud builds submit --tag gcr.io/s5terraform/run-sql
+
+(gcloud builds submit: This part of the command tells Google Cloud to submit the current
+directory (or a specified directory) to Google Cloud Build for building.
+
+--tag gcr.io/<YOUR_PROJECT_ID>/run-sql: This flag specifies the tag for the resulting Docker image.
+
+gcr.io is the Google Container Registry.
+<YOUR_PROJECT_ID> should be replaced with your actual Google Cloud project ID.
+run-sql is the name of the Docker image.)
+
+
+3. Now we need some permissions to access the Cloud SQL instance from Cloud Run. Follow these steps
+to grant the necessary permissions:
+https://cloud.google.com/sql/docs/mysql/connect-instance-cloud-run#configure_a_service_account
+
+
+4. Deploy the backend service to Cloud Run with the following these steps:
+https://cloud.google.com/sql/docs/mysql/connect-instance-cloud-run#expandable-5
+
+Remember that our backend app is different then the sample in the above description, e.g. ours
+doesn't serve a frontend, just a REST API.
+
+INSTANCE_UNIX_SOCKET        /cloudsql/s5terraform:europe-north1:exercise3
+INSTANCE_CONNECTION_NAME    s5terraform:europe-north1:exercise3
+DB_NAME                     exercise3-db
+DB_USER                     exercise3-user
+DB_PASS                     test
+
+
+5. Test the service's GET and POST /questions endpoints with e.g. Thunder Client for VS Code
+https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
+
+input for correct answer needs to be an int
