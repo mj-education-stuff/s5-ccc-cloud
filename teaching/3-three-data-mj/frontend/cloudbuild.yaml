@@ -1,0 +1,11 @@
+steps:
+    - name: 'gcr.io/cloud-builders/docker'
+      args: [
+        'build', '-t',
+        'eu.gcr.io/cloud-computing-continuum-2024/three-data-frontend:latest',
+        './frontend/'
+      ]
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['push', 'eu.gcr.io/cloud-computing-continuum-2024/three-data-frontend:latest']
+  options:
+    logging: CLOUD_LOGGING_ONLY
