@@ -1,0 +1,40 @@
+# .gitignore
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+*Zone.Identifier
+
+# IDE-specific files
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Dependency directories
+node_modules/
+vendor/
+target/
+out/
+
+# Build directories
+dist/
+build/
+bin/
+obj/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+*.pid
+*.seed
+*.pid.lock
+
+.next/
+.contentlayer/
